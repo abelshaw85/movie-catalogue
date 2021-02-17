@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	  xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
+<head th:fragment="head(title)">
+	<title>[[${title}]]</title>
+	
+	<!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css" 
+    	integrity="sha384-TX8t27EcRE3e/ihU7zmQxVncDAy5uIKz4rEkgIXeMed4M0jlfIDPvg6uqKI2xXr2" crossorigin="anonymous">
+
+	<link rel="stylesheet" 
+		th:href="@{/css/main-styles.css}" />
+		
+	<link rel="stylesheet" 
+		href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.2/css/all.css" type="text/css" />
+	
+	<!-- Favicon -->
+	<link rel="apple-touch-icon" sizes="180x180" th:href="@{/favicon/apple-touch-icon.png}">
+	<link rel="icon" type="image/png" sizes="32x32" th:href="@{/favicon/favicon-32x32.png}">
+	<link rel="icon" type="image/png" sizes="16x16" th:href="@{/favicon/favicon-16x16.png}">
+	<link rel="manifest" th:href="@{/favicon/site.webmanifest}">
+	<link rel="mask-icon" th:href="@{/favicon/safari-pinned-tab.svg}" color="#5bbad5">
+	<meta name="msapplication-TileColor" content="#da532c">
+	<meta name="theme-color" content="#ffffff">
+
+		
+</head>
+<body>
+<nav th:fragment="navbar" class="navbar navbar-expand-lg navbar-dark bg-dark mb-2">
+	<a class="navbar-brand" th:href="@{/movie-catalogue}"> 
+	<img
+		th:src="@{/images/clapper.png}" 
+		width="35" 
+		height="35"
+		class="d-inline-block align-top mr-2" 
+		alt="Movie Catalogue"> Movie Catalogue
+	</a>
+	<div class="collapse navbar-collapse" id="navbarSupportedContent">
+		<ul class="navbar-nav mr-auto">
+			<li class="nav-item active">
+				<a class="nav-link" th:href="@{/movie-catalogue}">Home
+					<!-- For Screenreaders -->
+					<span class="sr-only">(current)</span>
+				</a>
+			</li>
+			<li class="nav-item active">
+				<a class="nav-link" th:href="@{/movie-catalogue/add}">Add New Movie
+					<!-- For Screenreaders -->
+					<span class="sr-only">(current)</span>
+				</a>
+			</li>
+			<!--  
+				<li class="nav-item dropdown" sec:authorize="isAuthenticated()">
+				<a class="nav-link dropdown-toggle" 
+					href="#" 
+					id="navbarDropdown"
+					role="button" 
+					data-toggle="dropdown" 
+					aria-haspopup="true"
+					aria-expanded="false"> 
+					Your Movies 
+				</a>
+				<div class="dropdown-menu" aria-labelledby="navbarDropdown">
+					<a class="dropdown-item" th:href="@{/movie-catalogue/add}"
+						th:text="'Add new movie'">
+						add
+					</a> 
+					<a class="dropdown-item" href="#">
+						Another action
+					</a>
+					<div class="dropdown-divider"></div>
+					<a class="dropdown-item" href="#">
+						Something else here
+					</a>
+				</div>
+			</li>-->
+		</ul>
+		<!--  <form class="form-inline my-2 my-lg-0">
+    <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
+    <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+  </form>-->
+	<th:block sec:authorize="isAuthenticated()">
+	<form class="form-inline my-2 my-lg-0" th:action="@{/logout}" method="post">
+		<span class="text-light">You are logged in as <span
+			style="font-weight: bold;">[[${#httpServletRequest.remoteUser}]]</span></span>
+			<button type="submit" th:value="${'Log out'}"
+				class="btn btn-outline-info ml-3">Logout</button>
+	    </form>
+		
+		<form
+			style="display: inline-block;">
+			
+		</form>
+	</th:block>
+	</div>
+</nav>
+<th:block th:fragment="bootstrap-scripts">
+<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+</th:block>
+
+<footer th:fragment="footer" class="mt-auto" style="text-align: center">
+	<div class="bg-dark text-muted p-4 mt-5">
+	<p>The following technologies were used in the making on this web app:</p>
+	<a href="https://www.thymeleaf.org/index.html" target="_blank">
+		<img th:src="@{/images/footer-logos/thymeleaf.png}" class="logo ml-2 mr-2"></a>
+	<a href="https://spring.io/projects/spring-boot" target="_blank">
+		<img th:src="@{/images/footer-logos/spring-boot.png}" class="logo ml-2 mr-2"></a>
+	<a href="https://spring.io/projects/spring-security" target="_blank">
+		<img th:src="@{/images/footer-logos/spring-security.png}" class="logo ml-2 mr-2"></a>
+	<a href="https://hibernate.org/orm/" target="_blank">
+		<img th:src="@{/images/footer-logos/hibernate.png}" class="logo ml-2 mr-2"></a>
+	<a href="https://getbootstrap.com/" target="_blank">
+		<img th:src="@{/images/footer-logos/bootstrap.png}" class="logo ml-2 mr-2"></a>
+	<a href="http://www.omdbapi.com/" target="_blank">
+		<img th:src="@{/images/footer-logos/omdb.png}" class="logo ml-2 mr-2"></a>
+	<a href="https://www.mysql.com/" target="_blank">
+		<img th:src="@{/images/footer-logos/mysql.png}" class="logo ml-2 mr-2"></a>
+	</div>
+</footer>
+
+</body>
+</html>

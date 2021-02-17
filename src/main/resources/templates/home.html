@@ -1,0 +1,20 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+	<title>My Homepage</title>
+	
+	<!-- Reference CSS File -->
+	<link rel="stylesheet" 
+		th:href="@{/css/main-styles.css}" />
+</head>
+
+<body>
+
+	<p th:text="'Time on the server is ' + ${theDate}" class="emphasis" />
+	<hr>
+	<h3>Movie Catalogue</h3>
+	<a th:href="@{/movie-catalogue}">View the Movie Catalogue!</a>
+</body>
+
+</html>

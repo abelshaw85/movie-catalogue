@@ -1,0 +1,64 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head th:replace="fragments/fragments.html :: head('Search the IMDb Database')">
+</head>
+
+<body>
+
+<div class="container d-flex flex-column min-vh-100">
+<nav th:insert="fragments/fragments.html :: navbar">
+</nav>
+<hr>
+<h2 th:text="'Search the IMDb Database'">Search the IMDb Database</h2>
+
+<form action="#" 
+	th:action="@{/movie-catalogue/search/omdb/title(editId=${titleSearch.id})}"
+	method="POST"
+	th:object="${titleSearch}"
+	class="mb-3">
+		
+	<!-- Hidden form field to handle update -->
+	<input type="hidden" th:field="*{id}" />
+	<label for="title" th:text="'Search by title'">Title</label>
+	<div class="row">
+		<div class="col-md-11 pr-0">
+			<input type="text" class="form-control input-search" th:field="*{term}" id="title">
+			<div th:if="${#fields.hasErrors('term')}">
+				<span th:text="${#fields.errors('term').get(0)}" class="error">search error</span>
+			</div>
+		</div>
+		<div class="col-md-1 pl-0">
+			<button type="submit" class="btn btn-info btn-search" style="width: 100%;"><i class="fa fa-search"></i></button>
+		</div>
+	</div>
+</form>
+<form action="#" 
+		th:action="@{/movie-catalogue/search/omdb/imdbid(editId=${imdbSearch.id})}"
+		method="POST"
+		th:object="${imdbSearch}">
+		
+	<!-- Hidden form field to handle update -->
+	<input type="hidden" th:field="*{id}" />
+	<label for="imdbId" th:text="'Search by IMDb ID'">imdb id</label>
+	<div class="row">
+		<div class="col-md-11 pr-0">
+			<input type="text" class="form-control input-search" th:field="*{term}" id="imdbId">
+			<div th:if="${#fields.hasErrors('term')}">
+				<span th:text="${#fields.errors('term').get(0)}" class="error">search error</span>
+			</div>
+		</div>
+		<div class="col-md-1 pl-0">
+			<button type="submit" class="btn btn-info btn-search" style="width: 100%;"><i class="fa fa-search"></i></button>
+		</div>
+	</div>
+</form>
+<footer th:replace="fragments/fragments.html :: footer">
+</footer>
+</div>
+
+
+<th:block th:insert="fragments/fragments.html :: bootstrap-scripts"></th:block>
+</body>
+
+</html>

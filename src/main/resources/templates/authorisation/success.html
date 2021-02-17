@@ -1,0 +1,25 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head th:replace="fragments/fragments.html :: head('Account created')">
+</head>
+
+<body class="d-flex flex-column min-vh-100">
+
+<div class="container" >
+<nav th:insert="fragments/fragments.html :: navbar">
+</nav>
+	<h3 th:text="'Account Created!'">success</h3>
+	<div class="alert alert-info">
+		<p th:text="'You may now log in and add movies to your catalogue!'"></p>
+	</div>
+	<a th:href="@{/login}" th:text="'Login'">login</a>
+</div>
+<footer th:replace="fragments/fragments.html :: footer">
+</footer>
+
+
+<th:block th:insert="fragments/fragments.html :: bootstrap-scripts"></th:block>
+</body>
+
+</html>

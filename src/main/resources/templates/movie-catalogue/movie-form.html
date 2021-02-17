@@ -1,0 +1,126 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head th:replace="fragments/fragments.html :: head('Add a New Movie')">
+</head>
+
+<body>
+
+<div class="container d-flex flex-column min-vh-100">
+<nav th:insert="fragments/fragments.html :: navbar">
+</nav>
+<hr>
+<h2 th:text="${movieDTO.id} > 0 ? 'Update Movie' : 'Add New Movie'">Add a New Movie</h2>
+<form action="#" 
+		th:action="@{/movie-catalogue/save}"
+		th:object="${movieDTO}" 
+		method="POST">
+	<div class="mb-3">
+		<!-- Hidden form field to handle update -->
+		<input type="hidden" th:field="*{id}" />
+		<a th:if="${movieDTO.id gt 0}" th:href="@{/movie-catalogue/search/omdb(editId=${movieDTO.id})}" th:text="'Auto fill this form using the IMDb Database'">search</a>
+		<a th:unless="${movieDTO.id gt 0}" th:href="@{/movie-catalogue/search/omdb}" th:text="'Auto fill this form using the IMDb Database'">search</a>
+	</div>
+	
+	<fieldset class="form-group">
+  	<legend>Information</legend>
+	<div class="form-row">
+		<div class="form-group col-md-8">
+		<label for="title">Movie title (*)</label>
+		<input type="text" th:field="*{title}" id="title"
+			class="form-control">
+		<span th:if="${#fields.hasErrors('title')}" th:errors="*{title}" class="error">Title error</span>
+		<!-- Adds bottom padding below both field and error message -->
+		</div>
+		
+		<div class="form-group col-md-4">
+	    <label for="releaseDate">Release date (*)</label>
+	    <input type="date" 
+	      th:field="*{releaseDate}"
+	      id="releaseDate" 
+	      class="form-control textarea">
+	    <span th:if="${#fields.hasErrors('releaseDate')}" th:errors="*{releaseDate}" class="error">Date error</span>
+		</div>
+	</div>	
+	
+		<label for="actors">Actors</label>
+		<textarea th:field="*{actorsString}" id="actorsString"
+			class="form-control textarea" rows="4">
+		</textarea>
+		<small class="form-text text-muted">&#9432; Write each actor separated by a comma.</small>
+		<div class="mb-3"></div>
+		
+		<label for="plot">Plot summary (*)</label>
+		<textarea th:field="*{plot}" id="plot"
+			class="form-control textarea" placeholder="Write a short summary of the movie" rows="4">
+		</textarea>
+		<span th:if="${#fields.hasErrors('plot')}" th:errors="*{plot}" class="error">Plot error</span>
+		<div class="mb-3"></div>
+	</fieldset>
+	
+	<fieldset class="form-group">
+  	<legend>Details</legend>
+	<label for="poster">Poster URL</label>
+	<input type="text" th:field="*{poster}" id="poster" maxlength="250"
+		class="form-control mb-3">
+	
+	<label for="imdbId">IMDb ID</label>
+	<input type="text" th:field="*{imdbId}" id="imdbId"
+		class="form-control">
+	<small id="imdbIdHelp" class="form-text text-muted">&#9432; The IMDb ID can be found on the IMDb URL for the movie, begins with "tt".</small>
+	<span th:if="${#fields.hasErrors('imdbId')}" th:errors="*{imdbId}" class="error">imdb error</span>
+	<div class="mb-3"></div>
+	
+	<label for="mediaType">Media type</label>
+	<select class="form-control mb-3 textarea" th:field="*{mediaType}" id="mediaType">
+	    <option value="DVD">DVD</option>
+	    <option value="Blu-Ray">Blu-Ray</option>
+	    <option value="VHS">VHS</option>
+	    <option value="Other">Other</option>
+    </select>
+    
+    <input th:field="*{recommended}" type="checkbox" id="recommended" name="recommended" value="recommended" class="mb-4">
+	<label for="recommended"> This movie is recommended</label>
+    </fieldset>
+    
+    
+	<br>
+	
+	
+
+
+	<fieldset class="form-group">
+  	<legend>Genres</legend>
+	<div class="form-row">
+	<!-- th:field needs to bind to the movie's Genre list. Thymeleaf will figure out if this checkbox needs to be checked or not. -->
+	<!-- Spring Boot will even delete entries that are not included -->
+	<div class="form-group col-md-2 ml-4" th:each="genre: ${genres}">
+		<input class="form-check-input" 
+			type="checkbox"
+			th:id="${genre.name}" 
+			th:name="${genre.name}"
+			th:field="*{genres}" 
+			th:value="${genre.name}" /> 
+		<label class="form-check-label" th:for="${genre.name}" th:text="${' ' + genre.name}"></label>
+	</div>
+	
+	</div>
+	</fieldset>
+	<div class="row">
+	<div class="col-md-4 offset-md-8">
+	<div class="float-right">
+		<button type="submit" class="btn btn-info mt-3 mb-3" th:text="*{id} > 0 ? 'Update Movie' : 'Add New Movie'"></button>
+		<span> | </span>
+		<a th:href="@{/movie-catalogue}" th:text="${'Cancel'}" onclick="if (!(confirm('You will lose all changes, continue?'))) return false">cancel</a>
+	</div>
+	</div>
+	</div>
+</form>
+<footer th:replace="fragments/fragments.html :: footer">
+</footer>
+</div>
+
+<th:block th:insert="fragments/fragments.html :: bootstrap-scripts"></th:block>
+</body>
+
+</html>

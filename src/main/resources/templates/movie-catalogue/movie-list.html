@@ -1,0 +1,112 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org"
+	  xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
+
+<head th:replace="fragments/fragments.html :: head('List of your Movies')">
+</head>
+
+<body>
+
+<div class="container d-flex flex-column min-vh-100">
+<nav th:replace="fragments/fragments.html :: navbar">
+</nav>
+<hr>	
+	<!-- @ = context path for application -->
+	<h2 th:if="${message}" th:text="${message}">default h2</h2>
+	<p th:if="${movieList.size() == 0}" th:text="'No movies found.'"></p>
+	
+	
+	<div class="row mb-1">
+		<div class="col-md-2">
+			<a th:href="@{/movie-catalogue/add}" class="btn btn-info mb-2">Add a new movie</a>
+		</div>
+		<th:block th:if="${movieList.size() > 0}">
+			<form action="#" 
+				th:action="@{/movie-catalogue/search/user/title}"
+				method="POST"
+				th:object="${search}"
+				class="col-md-10">
+				<div class="row">
+				<div class="col-md-4 offset-md-7 pr-0">
+					<input type="text" placeholder="Search your movies" th:field="*{term}" class="form-control input-search mr-0">
+					<span th:if="${#fields.hasErrors('term')}" th:text="${#fields.errors('term').get(0)}" class="error">Search error</span>
+				</div>
+				<div class="col-md-1 pl-0">
+					<button type="submit" class="btn btn-info btn-search" style="width: 100%;"><i class="fa fa-search"></i></button>
+				</div>
+				</div>
+			</form>
+		</th:block>
+	</div>
+	
+	<table class="table table-bordered table-striped mb-0" th:if="${movieList.size() gt 0}">
+		<thead class="thead-dark">
+			<tr>
+				<th class="text-center">Title</th>
+				<th class="text-center">Release</th>
+				<th class="text-center">IMDb Link</th>
+				<th class="text-center">Media Type</th>
+				<th class="text-center">Action</th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr th:each="movie : ${movieList}">
+				<td>
+					<a th:href="@{/movie-catalogue/movie/{movieId}(movieId=${movie.id})}">
+						[[${movie.title + ' (' + #temporals.format(movie.releaseDate, 'yyyy') + ')'}]]</a>
+					<span class="input-group-addon glyphicon glyphicon-star">
+						<i 
+							class="fa text-muted" 
+							th:classappend="${movie.recommended ? 'fa-thumbs-up' : 'fa-thumbs-down'}" 
+							th:title="${movie.recommended ? 'You recommend this movie.' : 'You do not recommend this movie.'}" style="font-size: 0.8em;"></i>
+					</span>
+					<p th:text="*{recommended}"></p>
+				</td>
+				
+				<td th:text="${#temporals.format(movie.releaseDate, 'dd MMMM yyyy')}" />
+				<td>
+					<a 
+						th:if="${movie.imdbId}"
+						th:href="'https://www.imdb.com/title/' + ${movie.imdbId}" 
+						target="_blank" class="btn imdb">
+						IMDb
+					</a>
+				</td>
+				<td th:switch="${movie.mediaType}" class="text-center">
+					<img th:src="@{/images/media-icons/dvd.png}" th:case="'DVD'">
+					<img th:src="@{/images/media-icons/bluray.png}" th:case="'Blu-Ray'">
+					<img th:src="@{/images/media-icons/vhs.png}" th:case="'VHS'">
+					<img th:src="@{/images/media-icons/other.png}" th:case="'Other'">
+				</td>
+				<td class="text-center" style="width:0.1%; white-space: nowrap;">
+					<a 
+						th:href="@{/movie-catalogue/edit/{movieId}(movieId=${movie.id})}" 
+						class="btn btn-info"
+						title="Edit Movie"
+						>
+						<i class="fa fa-pen"></i>
+					</a>
+					<a 
+						th:href="@{/movie-catalogue/delete/{movieId}(movieId=${movie.id})}" 
+						class="btn btn-danger"
+						title="Delete Movie"
+						onclick="if (!(confirm('This will permenantly delete the movie, are you sure?'))) return false">
+						<i class="fa fa-trash-alt"></i>
+					</a>
+				</td>
+			</tr>
+		</tbody>
+	</table>
+	<div th:with="currentUrl=(${#httpServletRequest.requestURI})">
+	<a th:if="${page > 0}" th:href="@{${currentUrl}(page=${page - 1})}" th:text="${'&lt;&lt; Previous'}">Previous page</a>
+	<a th:if="${hasNextPage}" th:href="@{${currentUrl}(page=${page + 1})}" th:text="${'Next &gt;&gt;'}" class="float-right">Next page</a>
+	</div>
+	<footer th:replace="fragments/fragments.html :: footer">
+	</footer>
+</div>
+
+
+<th:block th:replace="fragments/fragments.html :: bootstrap-scripts"></th:block>
+</body>
+
+</html>

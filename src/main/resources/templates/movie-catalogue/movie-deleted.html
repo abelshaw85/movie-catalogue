@@ -1,0 +1,23 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head th:replace="fragments/fragments.html :: head('Movie Details')">
+</head>
+
+<body>
+
+<div class="container d-flex flex-column min-vh-100" th:object="${movieDTO}">
+<nav th:insert="fragments/fragments.html :: navbar">
+</nav>
+<hr>
+	<p class="alert alert-info" th:text="${title + ' was successfully deleted.'}">Movie was deleted.</p>
+	<a th:href="@{/movie-catalogue}" th:text="'Return to Movie Catalogue'">Back</a>
+<footer th:replace="fragments/fragments.html :: footer">
+</footer>
+</div>
+
+
+<th:block th:insert="fragments/fragments.html :: bootstrap-scripts"></th:block>
+</body>
+
+</html>

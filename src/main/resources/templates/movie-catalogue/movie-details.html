@@ -1,0 +1,74 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head th:replace="fragments/fragments.html :: head('Movie Details')">
+</head>
+
+<body>
+
+<div class="container d-flex flex-column min-vh-100" th:object="${movieDTO}">
+<nav th:insert="fragments/fragments.html :: navbar">
+</nav>
+<hr>
+	<a th:href="@{/movie-catalogue/}" th:text="${'Back to Movie Catalogue'}">Back</a>
+	<div class="row">
+		<!-- left-aligned image -->
+		<div class="col-md-4">
+			<img th:src="*{poster}" th:alt="|*{title} poster|" style="width:100%; height:auto;"/>
+		</div>
+		<!-- right-aligned details -->
+		<div class="col-md-8">
+		<div class="row">
+			<div class="col-md-10">
+				<h1 th:text="*{title}">Movie Title</h1>
+			</div>
+			<div class="col-md-2 float-right">		
+				<a th:href="@{/movie-catalogue/delete/{movieId}(movieId=${movieDTO.id})}" 
+					class="btn btn-danger float-right ml-1"
+					title="Delete Movie"
+					onclick="if (!(confirm('This will permenantly delete the movie, are you sure?'))) return false">
+					<i class="fa fa-trash-alt"></i>
+				</a>
+				<a th:href="@{/movie-catalogue/edit/{movieId}(movieId=${movieDTO.id})}"
+					class="btn btn-info float-right"
+					title="Edit Movie">
+					<i class="fa fa-pen"></i>
+				</a>
+			</div>
+		</div>
+		<div th:switch="*{mediaType}">
+			<img th:src="@{/images/media-icons/dvd.png}" th:case="'DVD'" class="float-right" th:alt="*{mediaType}">
+			<img th:src="@{/images/media-icons/bluray.png}" th:case="'Blu-Ray'" class="float-right" th:alt="*{mediaType}">
+			<img th:src="@{/images/media-icons/vhs.png}" th:case="'VHS'" class="float-right" th:alt="*{mediaType}">
+			<img th:src="@{/images/media-icons/other.png}" th:case="'Other'" class="float-right" th:alt="*{mediaType}">
+		</div>
+			
+			<p th:text="${'Release Date: ' + #temporals.format(movieDTO.releaseDate, 'dd MMM yyyy')}">date</p>
+			<p th:text="*{recommended} ? '&#128077 You recommend this movie.' : '&#128078; You do not recommend this movie.'">Recommended?</p>
+			Actors: 
+			<span th:each="actor, iter : *{actors}">
+				<a th:href="@{../actor/{actorId}(actorId=${actor.id})}">
+				<span th:text="${actor.name}">actor name</span></a><span th:if="!${iter.last}" th:text="', '">, </span>
+			</span>
+			<p th:text="*{plot}" class="mt-3">Summary about the plot</p>
+		</div>
+	</div>
+	<div class="row">
+	<div class="col-md-4">
+		<a 
+			th:if="*{imdbId}"
+			th:href="'https://www.imdb.com/title/' + *{imdbId}" 
+			target="_blank" class="btn imdb">
+			IMDb
+		</a>
+	</div>
+	</div>
+<footer th:replace="fragments/fragments.html :: footer">
+</footer>
+</div>
+
+
+<th:block th:insert="fragments/fragments.html :: bootstrap-scripts"></th:block>
+</body>
+
+</html>

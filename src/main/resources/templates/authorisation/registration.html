@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	  xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
+
+<head th:replace="fragments/fragments.html :: head('Register new account')">
+</head>
+
+<body class="d-flex flex-column min-vh-100">
+<div class="container">
+<nav th:replace="fragments/fragments.html :: navbar">
+</nav>
+<hr>
+
+<div class="col-md-8 offset-md-2">
+	<div class="row">
+		<div th:if="${registrationError}" class="alert alert-danger" style="width: 100%;">
+			<span th:text="${registrationError}"></span>
+		</div>
+	</div>
+	<div class="card row">
+	  <div class="card-header bg-dark text-light">
+	    Register new account
+	  </div>
+	  <div class="card-body">
+	    <form th:action="@{/register/registerUser}" 
+			th:object="${user}" method="POST"
+			class="form-horizontal">
+			
+			<!-- User Name -->
+			<div class="input-group">
+			  <div class="input-group-prepend">
+			    <span class="input-group-text" id="basic-addon1"><i class="fa fa-user icon"></i></span>
+			  </div>
+			  <input 
+			  	type="text" 
+			  	class="form-control"
+			  	th:field="*{userName}" 
+			  	placeholder="Username (*)">
+			</div>
+			<span th:if="${#fields.hasErrors('userName')}" th:errors="*{userName}" class="error">Username error</span>
+			<div class="mb-3"></div>
+			
+			<!-- Password -->
+			<div class="input-group">
+			  <div class="input-group-prepend">
+			    <span class="input-group-text" id="basic-addon1"><i class="fa fa-lock icon"></i></span>
+			  </div>
+			  <input type="password" th:field="*{password}" placeholder="Password (*)" class="form-control">
+			</div>
+			<span th:if="${#fields.hasErrors('password')}" th:errors="*{password}" class="error">Password error</span>
+			<div class="mb-3"></div>
+			
+			<!-- Confirm Password -->
+			<div class="input-group">
+			  <div class="input-group-prepend">
+			    <span class="input-group-text" id="basic-addon1"><i class="fa fa-lock icon"></i></span>
+			  </div>
+			  <input type="password" th:field="*{matchingPassword}" placeholder="Confirm Password (*)" class="form-control">
+			</div>
+			<span th:if="${#fields.hasErrors('matchingPassword')}" th:errors="*{matchingPassword}" class="error">Password match error</span>
+			<div class="mb-3"></div>
+			
+			<div class="form-group">
+				<button type="submit" class="btn btn-info" style="width: 100%;">Register</button>
+			</div>			
+		</form>
+		<div class="text-center">
+		<a th:href="@{/login}">Back to Login.</a>
+		</div>
+	  </div>
+	</div>
+</div>
+</div>
+<footer th:replace="fragments/fragments.html :: footer">
+</footer>
+
+<th:block th:replace="fragments/fragments.html :: bootstrap-scripts"></th:block>
+</body>
+</html>

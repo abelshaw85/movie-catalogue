@@ -1,0 +1,29 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head th:replace="fragments/fragments.html :: head('Error ' + ${error.code})">
+</head>
+
+<body>
+
+<div class="container d-flex flex-column min-vh-100" th:object="${error}" >
+<nav th:insert="fragments/fragments.html :: navbar">
+</nav>
+	<h3 th:text="'Error: ' + *{code} + ' - ' + *{type}">Error</h3>
+	<div class="alert" th:classappend="|
+		${error.level.toString() == 'WARNING' ? 'alert-warning' : ''} 
+		${error.level.toString() == 'DANGER' ? 'alert-danger' : ''}
+		|">
+		<p th:utext="*{message}"></p>
+	</div>
+	<a th:href="@{/movie-catalogue}" th:text="'Return to Movie Catalogue'">back</a>
+<footer th:replace="fragments/fragments.html :: footer">
+</footer>
+</div>
+
+
+
+<th:block th:insert="fragments/fragments.html :: bootstrap-scripts"></th:block>
+</body>
+
+</html>
