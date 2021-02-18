@@ -1,0 +1,36 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org"
+	  xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
+
+<head th:replace="fragments/fragments.html :: head('List of your Movies')">
+</head>
+
+<body>
+
+<div class="container d-flex flex-column min-vh-100">
+<nav th:replace="fragments/fragments.html :: navbar">
+</nav>
+<hr>	
+	<div class="card border-info mb-3">
+	  <div class="card-header font-weight-bold">Welcome to the Movie Catalogue database</div>
+	  <div class="card-body text-info">
+	    <p class="card-text">This site allows you to keep track of your physical movie collection such as DVDs, Blu-Ray and VHS 
+	    tapes.</p>
+	    <ul>
+	    	<li>Not a member? <a th:href="@{/register}">Register</a> a new account now, or <a th:href="@{/login}">login</a> with an existing account.</li>
+	    	<li>Already registered? <a th:href="@{/movie-catalogue/add}">Add</a> your first move to your catalogue! You can either fill in the details manually or use the
+	    	 IMDb search function to automatically fill in the details for you.</li>
+	    	<li>All up to date? <a th:href="@{/movie-catalogue}">View your collection</a> or search for a specific movie.</li>
+	    </ul>
+	  </div>
+	</div>
+	
+	<footer th:replace="fragments/fragments.html :: footer">
+	</footer>
+</div>
+
+
+<th:block th:replace="fragments/fragments.html :: bootstrap-scripts"></th:block>
+</body>
+
+</html>

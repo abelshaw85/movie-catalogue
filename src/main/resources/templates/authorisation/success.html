@@ -4,9 +4,9 @@
 <head th:replace="fragments/fragments.html :: head('Account created')">
 </head>
 
-<body class="d-flex flex-column min-vh-100">
+<body>
 
-<div class="container" >
+<div class="container d-flex flex-column min-vh-100">
 <nav th:insert="fragments/fragments.html :: navbar">
 </nav>
 	<h3 th:text="'Account Created!'">success</h3>
@@ -17,7 +17,6 @@
 </div>
 <footer th:replace="fragments/fragments.html :: footer">
 </footer>
-
 
 <th:block th:insert="fragments/fragments.html :: bootstrap-scripts"></th:block>
 </body>

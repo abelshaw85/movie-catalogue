@@ -18,8 +18,10 @@
 	<div class="mb-3">
 		<!-- Hidden form field to handle update -->
 		<input type="hidden" th:field="*{id}" />
-		<a th:if="${movieDTO.id gt 0}" th:href="@{/movie-catalogue/search/omdb(editId=${movieDTO.id})}" th:text="'Auto fill this form using the IMDb Database'">search</a>
-		<a th:unless="${movieDTO.id gt 0}" th:href="@{/movie-catalogue/search/omdb}" th:text="'Auto fill this form using the IMDb Database'">search</a>
+		<a class="btn btn-info" th:if="${movieDTO.id gt 0}" th:href="@{/movie-catalogue/search/omdb(editId=${movieDTO.id})}"><i class="fa fa-search icon"></i> Search IMDb</a>
+		<a class="btn btn-info" th:unless="${movieDTO.id gt 0}" th:href="@{/movie-catalogue/search/omdb}"><i class="fa fa-search icon"></i> Search IMDb</a>
+		<i class="fas fa-question-circle" data-toggle="tooltip" data-placement="right" 
+			title="Search for a movie by title or IMDb ID. Using this method will auto-fill the form with the details provided by IMDb."></i>
 	</div>
 	
 	<fieldset class="form-group">

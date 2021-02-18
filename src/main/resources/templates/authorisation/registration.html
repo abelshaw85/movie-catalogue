@@ -5,8 +5,8 @@
 <head th:replace="fragments/fragments.html :: head('Register new account')">
 </head>
 
-<body class="d-flex flex-column min-vh-100">
-<div class="container">
+<body>
+<div class="container d-flex flex-column min-vh-100">
 <nav th:replace="fragments/fragments.html :: navbar">
 </nav>
 <hr>
@@ -70,9 +70,10 @@
 	  </div>
 	</div>
 </div>
-</div>
 <footer th:replace="fragments/fragments.html :: footer">
 </footer>
+</div>
+
 
 <th:block th:replace="fragments/fragments.html :: bootstrap-scripts"></th:block>
 </body>

@@ -9,11 +9,11 @@
 		<version>2.4.0</version>
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
-	<groupId>com.myhomepage</groupId>
-	<artifactId>homepage</artifactId>
-	<version>0.0.1-SNAPSHOT</version>
-	<name>homepage</name>
-	<description>My personal homepage for projects and articles</description>
+	<groupId>com.movie.catalogue</groupId>
+	<artifactId>moviecatalogue</artifactId>
+	<version>1.0</version>
+	<name>Movie Catalogue</name>
+	<description>An online database where users can save information about movies in their collection.</description>
 
 	<properties>
 		<java.version>14</java.version>
@@ -106,5 +106,25 @@
 			</plugin>
 		</plugins>
 	</build>
+	
+		<!-- Create two profiles for Development and Production -->
+	<profiles>
+		<profile>
+			<id>dev</id>
+			<properties>
+				<activatedProperties>dev</activatedProperties>
+			</properties>
+			<activation>
+				<!-- This is the default profile -->
+				<activeByDefault>true</activeByDefault>
+			</activation>
+		</profile>
+		<profile>
+			<id>prod</id>
+			<properties>
+				<activatedProperties>prod</activatedProperties>
+			</properties>
+		</profile>
+	</profiles>
 
 </project>
